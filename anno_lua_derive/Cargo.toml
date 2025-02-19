@@ -1,0 +1,16 @@
+[package]
+name = "anno_lua_derive"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[lib]
+proc-macro = true
+
+[dependencies]
+anno_lua_impl = { path = "../anno_lua_impl" }
+quote = "1.0.38"
+syn = { version = "2.0.98", features = [ "extra-traits" ] }
+proc-macro2 = "1.0"

@@ -1,0 +1,11 @@
+[package]
+name = "anno_lua"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+anno_lua_impl = { path = "../anno_lua_impl" }
+anno_lua_derive = { path = "../anno_lua_derive" }

@@ -1,0 +1,16 @@
+[workspace]
+resolver = "2"
+
+members = [
+    "anno_lua",
+    "anno_lua_derive",
+    "anno_lua_impl"
+]
+default-members = [ "anno_lua" ]
+
+package.version = "0.1.0"
+package.edition = "2021"
+package.license = "MIT OR Apache-2.0"
+package.authors = [ "museun <museun@users.noreply.github.com>" ]
+package.documentation = "https://docs.rs/anno_lua"
+package.repository = "https://github.com/museun/anno_lua"
