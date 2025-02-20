@@ -66,7 +66,10 @@ where
     }
 }
 
-fn generate_class(out: &mut impl Write, class: &Class) -> std::io::Result<()> {
+/// Generate a specific class
+///
+/// This'll append to the writer passed into it
+pub fn generate_class(out: &mut impl Write, class: &Class) -> std::io::Result<()> {
     for doc in class.docs {
         writeln!(out, "--- {doc}")?;
     }
@@ -92,7 +95,10 @@ fn generate_class(out: &mut impl Write, class: &Class) -> std::io::Result<()> {
     writeln!(out)
 }
 
-fn generate_enum(out: &mut impl Write, enum_: &Enum) -> std::io::Result<()> {
+/// Generate a specific enum
+///
+/// This'll append to the writer passed into it
+pub fn generate_enum(out: &mut impl Write, enum_: &Enum) -> std::io::Result<()> {
     for doc in enum_.docs {
         writeln!(out, "--- {doc}")?;
     }
