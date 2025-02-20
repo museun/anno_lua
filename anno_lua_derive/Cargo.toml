@@ -12,5 +12,5 @@ proc-macro = true
 [dependencies]
 anno_lua_impl = { path = "../anno_lua_impl" }
 quote = "1.0.38"
-syn = { version = "2.0.98", features = [ "extra-traits" ] }
+syn = "2.0.98"
 proc-macro2 = "1.0"
