@@ -78,27 +78,27 @@ pub fn generate_type(out: &mut impl Write, ty: &Type) -> std::io::Result<()> {
 /// This'll append to the writer passed into it
 pub fn generate_class(out: &mut impl Write, class: &Class) -> std::io::Result<()> {
     for doc in class.docs {
-        writeln!(out, "--- {doc}")?;
+        writeln!(out, "--- {doc}", doc = doc.trim_start())?;
     }
     write!(out, "---@class ")?;
     if class.exact {
         write!(out, "(exact) ")?;
     }
-    writeln!(out, "{name}", name = class.name)?;
+    writeln!(out, "{name}", name = class.name.trim_start())?;
 
     for field in class.fields {
         for doc in field.docs {
-            writeln!(out, "--- {doc}")?;
+            writeln!(out, "--- {doc}", doc = doc.trim_start())?;
         }
         writeln!(
             out,
             "---@field {name} {ty}",
-            name = field.name,
-            ty = field.ty
+            name = field.name.trim_start(),
+            ty = field.ty.trim_start()
         )?;
     }
 
-    writeln!(out, "{name} = {{ }}", name = class.name)?;
+    writeln!(out, "{name} = {{ }}", name = class.name.trim_start())?;
     writeln!(out)
 }
 
@@ -107,16 +107,16 @@ pub fn generate_class(out: &mut impl Write, class: &Class) -> std::io::Result<()
 /// This'll append to the writer passed into it
 pub fn generate_enum(out: &mut impl Write, enum_: &Enum) -> std::io::Result<()> {
     for doc in enum_.docs {
-        writeln!(out, "--- {doc}")?;
+        writeln!(out, "--- {doc}", doc = doc.trim_start())?;
     }
 
-    writeln!(out, "---@enum {name}", name = enum_.name)?;
-    writeln!(out, "{name} = {{", name = enum_.name)?;
+    writeln!(out, "---@enum {name}", name = enum_.name.trim_start())?;
+    writeln!(out, "{name} = {{", name = enum_.name.trim_start())?;
     for variant in enum_.variants {
         for doc in variant.docs {
-            writeln!(out, "    --- {doc}")?;
+            writeln!(out, "    --- {doc}", doc = doc.trim_start())?;
         }
-        write!(out, "    {name} = ", name = variant.name,)?;
+        write!(out, "    {name} = ", name = variant.name.trim_start())?;
         match variant.discriminant {
             Discriminant::Number(n) => writeln!(out, "{n},")?,
             Discriminant::Named(n) => writeln!(out, "{n},")?,
