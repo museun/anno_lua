@@ -14,3 +14,4 @@ package.license = "MIT OR Apache-2.0"
 package.authors = [ "museun <museun@users.noreply.github.com>" ]
 package.documentation = "https://docs.rs/anno_lua"
 package.repository = "https://github.com/museun/anno_lua"
+package.readme = "README.md"
