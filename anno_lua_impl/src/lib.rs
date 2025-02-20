@@ -60,7 +60,14 @@ pub fn generate<T>(out: &mut impl Write) -> std::io::Result<()>
 where
     T: Anno,
 {
-    match T::lua_type() {
+    generate_type(out, &T::lua_type())
+}
+
+/// Generate a specific type
+///
+/// This'll append to the writer passed into it
+pub fn generate_type(out: &mut impl Write, ty: &Type) -> std::io::Result<()> {
+    match ty {
         Type::Class(class) => generate_class(out, &class),
         Type::Enum(enum_) => generate_enum(out, &enum_),
     }
