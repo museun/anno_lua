@@ -101,5 +101,6 @@
 ///
 pub use anno_lua_derive::Anno;
 pub use anno_lua_impl::{
-    generate, Anno, AnnoEnum, Class, Discriminant, Enum, Field, Type, Variant,
+    generate, generate_class, generate_enum, generate_type, Anno, AnnoEnum, Class, Discriminant,
+    Enum, Field, Type, Variant,
 };
