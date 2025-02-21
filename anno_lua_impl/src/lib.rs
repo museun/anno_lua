@@ -10,6 +10,9 @@ pub trait Anno {
 pub trait AnnoEnum: Sized + 'static {
     /// Get the variant mappings
     fn variants() -> &'static [(&'static str, Self)];
+
+    /// Get the variant name
+    fn variant_name(&self) -> &'static str;
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]

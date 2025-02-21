@@ -13,13 +13,13 @@ use crate::{
     error::Error,
 };
 
-pub struct EnumMeta {
-    pub use_self: bool,
-    pub name: String,
+struct EnumMeta {
+    use_self: bool,
+    name: String,
 }
 
 impl EnumMeta {
-    pub fn parse(input: &DeriveInput) -> Result<Self, syn::Error> {
+    fn parse(input: &DeriveInput) -> Result<Self, syn::Error> {
         let Some(attr) = input.attrs.iter().find(|c| c.path().is_ident("anno")) else {
             return Ok(Self {
                 use_self: false,
@@ -128,7 +128,16 @@ fn make_variant_mapping(
     ident: &syn::Ident,
     variants: &[data::Variant],
 ) -> proc_macro2::TokenStream {
-    let iter = variants.iter().map(|var| {
+    let names = variants.iter().map(|var| {
+        let variant = &var.variant;
+        let name = &var.name;
+        let path = syn::Ident::new(variant, var.span);
+        quote! {
+            #ident::#path => #name
+        }
+    });
+
+    let variants = variants.iter().map(|var| {
         let variant = &var.variant;
         let name = &var.name;
         let path = syn::Ident::new(variant, var.span);
@@ -140,7 +149,13 @@ fn make_variant_mapping(
     quote! {
         impl anno_lua::AnnoEnum for #ident {
             fn variants() -> &'static [(&'static str, #ident)] {
-                &[ #( #iter ),* ]
+                &[ #( #variants ),* ]
+            }
+
+            fn variant_name(&self) -> &'static str {
+                match self {
+                    #( #names ),*
+                }
             }
         }
     }
