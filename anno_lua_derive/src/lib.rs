@@ -10,9 +10,12 @@ pub fn anno(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     }
 }
 
-mod attrs;
-mod data;
-mod docs;
-mod enums;
 mod error;
+
+mod data;
+
+mod attrs;
+mod docs;
+
+mod enums;
 mod structs;
