@@ -21,6 +21,15 @@ pub enum Type {
     Enum(Enum),
 }
 
+impl Type {
+    pub const fn name(&self) -> &'static str {
+        match self {
+            Self::Class(c) => c.name,
+            Self::Enum(e) => e.name,
+        }
+    }
+}
+
 #[derive(Copy, Clone, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub struct Class {
     pub exact: bool,
