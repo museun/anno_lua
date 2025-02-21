@@ -7,7 +7,7 @@ pub trait Anno {
 }
 
 /// Variant mapping of the lua named variants to the enum type
-pub trait AnnoEnum: Sized + 'static {
+pub trait AnnoEnum: Anno + Sized + 'static {
     /// Get the variant mappings
     fn variants() -> &'static [(&'static str, Self)];
 
