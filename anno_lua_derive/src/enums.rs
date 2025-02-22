@@ -15,6 +15,7 @@ use crate::{
 
 struct EnumMeta {
     use_self: bool,
+    alias: Option<String>,
     name: String,
 }
 
@@ -23,12 +24,14 @@ impl EnumMeta {
         let Some(attr) = input.attrs.iter().find(|c| c.path().is_ident("anno")) else {
             return Ok(Self {
                 use_self: false,
+                alias: None,
                 name: input.ident.to_string(),
             });
         };
 
         let mut this = Self {
             use_self: false,
+            alias: None,
             name: String::new(),
         };
 
@@ -47,6 +50,22 @@ impl EnumMeta {
 
             if meta.path.is_ident("self") {
                 this.use_self = true;
+            }
+
+            if meta.path.is_ident("alias") {
+                if this.use_self {
+                    return Err(syn::Error::new(
+                        meta.path.span(),
+                        "self is exclusive with alias",
+                    ));
+                }
+
+                let value = meta.value()?;
+                let name = value.parse::<LitStr>()?.value();
+                if name.trim().is_empty() {
+                    return Err(syn::Error::new(value.span(), "alias cannot be empty"));
+                }
+                this.alias = Some(name);
             }
 
             Ok(())
@@ -68,7 +87,11 @@ pub fn parse(input: &DeriveInput, data: &DataEnum) -> proc_macro::TokenStream {
     };
 
     let variants = data.variants.iter().collect::<Vec<_>>();
-    let variants = match collect_variants(&variants, &meta.name, meta.use_self) {
+    let variants = match collect_variants(
+        &variants,
+        meta.alias.as_deref().unwrap_or(&meta.name),
+        meta.use_self || meta.alias.is_some(),
+    ) {
         Ok(variants) => variants,
         Err(err) => return err.into_compile_error(),
     };
