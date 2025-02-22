@@ -40,12 +40,15 @@
 //!
 //! ## enums
 //! #### on the type
-//! `#[anno(name = "name", self)]`
+//! `#[anno(name = "name", self, alias = "alias")]`
 //!
 //! | attribute | description | required |
 //! | --- | --- | --- |
 //! | `name` | allows you to rename the type | no |
 //! | `self` | should the variant discriminants use this type? | no |
+//! | `alias`| allows you alias this variant to another type | no |
+//!
+//! _Note_: `self` and `alias` are exclusive. 'alias' is the same as 'self' except you can change its /other/ name`
 //!
 //! #### on variants
 //! `#[anno(name = "name")]`
